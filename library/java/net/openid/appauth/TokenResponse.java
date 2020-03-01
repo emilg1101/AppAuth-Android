@@ -66,7 +66,7 @@ public class TokenResponse {
     static final String KEY_ACCESS_TOKEN = "access_token";
 
     @VisibleForTesting
-    static final String KEY_EXPIRES_IN = "expires_in";
+    static final String KEY_EXPIRES_IN = "expires";
 
     @VisibleForTesting
     static final String KEY_REFRESH_TOKEN = "refresh_token";
@@ -81,12 +81,8 @@ public class TokenResponse {
     static final String KEY_ADDITIONAL_PARAMETERS = "additionalParameters";
 
     private static final Set<String> BUILT_IN_PARAMS = new HashSet<>(Arrays.asList(
-            KEY_TOKEN_TYPE,
             KEY_ACCESS_TOKEN,
-            KEY_EXPIRES_IN,
-            KEY_REFRESH_TOKEN,
-            KEY_ID_TOKEN,
-            KEY_SCOPE
+            KEY_EXPIRES_IN
     ));
 
     /**
@@ -213,16 +209,16 @@ public class TokenResponse {
          */
         @NonNull
         public Builder fromResponseJson(@NonNull JSONObject json) throws JSONException {
-            setTokenType(JsonUtil.getString(json, KEY_TOKEN_TYPE));
+            // setTokenType(JsonUtil.getString(json, KEY_TOKEN_TYPE));
             setAccessToken(JsonUtil.getStringIfDefined(json, KEY_ACCESS_TOKEN));
             setAccessTokenExpirationTime(JsonUtil.getLongIfDefined(json, KEY_EXPIRES_AT));
-            if (json.has(KEY_EXPIRES_IN)) {
-                setAccessTokenExpiresIn(json.getLong(KEY_EXPIRES_IN));
-            }
-            setRefreshToken(JsonUtil.getStringIfDefined(json, KEY_REFRESH_TOKEN));
-            setIdToken(JsonUtil.getStringIfDefined(json, KEY_ID_TOKEN));
-            setScope(JsonUtil.getStringIfDefined(json, KEY_SCOPE));
-            setAdditionalParameters(extractAdditionalParams(json, BUILT_IN_PARAMS));
+            // if (json.has(KEY_EXPIRES_IN)) {
+                // setAccessTokenExpiresIn(json.getLong(KEY_EXPIRES_IN));
+            // }
+            // setRefreshToken(JsonUtil.getStringIfDefined(json, KEY_REFRESH_TOKEN));
+            // setIdToken(JsonUtil.getStringIfDefined(json, KEY_ID_TOKEN));
+            // setScope(JsonUtil.getStringIfDefined(json, KEY_SCOPE));
+            // setAdditionalParameters(extractAdditionalParams(json, BUILT_IN_PARAMS));
 
             return this;
         }
@@ -426,14 +422,14 @@ public class TokenResponse {
     public JSONObject jsonSerialize() {
         JSONObject json = new JSONObject();
         JsonUtil.put(json, KEY_REQUEST, request.jsonSerialize());
-        JsonUtil.putIfNotNull(json, KEY_TOKEN_TYPE, tokenType);
+        // JsonUtil.putIfNotNull(json, KEY_TOKEN_TYPE, tokenType);
         JsonUtil.putIfNotNull(json, KEY_ACCESS_TOKEN, accessToken);
         JsonUtil.putIfNotNull(json, KEY_EXPIRES_AT, accessTokenExpirationTime);
-        JsonUtil.putIfNotNull(json, KEY_ID_TOKEN, idToken);
-        JsonUtil.putIfNotNull(json, KEY_REFRESH_TOKEN, refreshToken);
-        JsonUtil.putIfNotNull(json, KEY_SCOPE, scope);
-        JsonUtil.put(json, KEY_ADDITIONAL_PARAMETERS,
-                JsonUtil.mapToJsonObject(additionalParameters));
+        // JsonUtil.putIfNotNull(json, KEY_ID_TOKEN, idToken);
+        // JsonUtil.putIfNotNull(json, KEY_REFRESH_TOKEN, refreshToken);
+        // JsonUtil.putIfNotNull(json, KEY_SCOPE, scope);
+        // JsonUtil.put(json, KEY_ADDITIONAL_PARAMETERS,
+                // JsonUtil.mapToJsonObject(additionalParameters));
         return json;
     }
 
